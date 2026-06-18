@@ -1,4 +1,4 @@
-name: Verificação da existência de arquivos
+name: Verificação do Projeto
 
 on:
   push:
@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Baixar código do repositório
         uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: Verificar index.html
         run: |
@@ -39,6 +44,9 @@ jobs:
             echo "❌ ERRO: O arquivo script.js não foi encontrado."
             exit 1
           fi
+  
+      - name: Verificar sintaxe do JavaScript
+        run: node --check script.js
 
       - name: Projeto validado
-        run: echo "🎉 Todos os arquivos foram encontrados. Projeto validado com sucesso!"
+        run: echo "🎉 Todos os arquivos foram encontrados e o JavaScript está válido!"
